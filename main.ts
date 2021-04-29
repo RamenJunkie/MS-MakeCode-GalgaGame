@@ -18,6 +18,7 @@ let spacePlane = sprites.create(img`
 `, SpriteKind.Player)
 spacePlane.setStayInScreen(true)
 info.setLife(3)
+let powerup = 0
 controller.moveSprite(spacePlane, 200, 200)
 controller.A.onEvent(ControllerButtonEvent.Pressed, function on_a_pressed() {
     let dart = sprites.createProjectileFromSprite(img`
@@ -62,6 +63,30 @@ game.onUpdateInterval(500, function on_update_interval() {
     bogey.left = scene.screenWidth()
     bogey.y = randint(0, scene.screenHeight())
     bogey.setFlag(SpriteFlag.AutoDestroy, true)
+})
+game.onUpdateInterval(1000, function bomb_update_interval() {
+    let weaponup = sprites.create(img`
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . 7 7 7 . . . . . . . .
+        . . . . 7 . . . 7 . . . . . . .
+        . . . 7 . 5 1 5 . 7 . . . . . .
+        . . . . 5 1 5 1 5 . . . . . . .
+        . . . 7 . 5 1 5 . 7 . . . . . .
+        . . . . 7 . . . 7 . . . . . . .
+        . . . . . 7 7 7 . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+    `, SpriteKind.Enemy)
+    weaponup.setVelocity(-25, 0)
+    weaponup.left = scene.screenWidth()
+    weaponup.y = randint(0, scene.screenHeight())
+    weaponup.setFlag(SpriteFlag.AutoDestroy, true)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_on_overlap(sprite: Sprite, otherSprite: Sprite) {
     otherSprite.destroy()

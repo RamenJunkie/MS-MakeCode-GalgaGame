@@ -20,6 +20,7 @@ spacePlane = sprites.create(img("""
 spacePlane.set_stay_in_screen(True)
 
 info.set_life(3)
+powerup = 0
 
 controller.move_sprite(spacePlane, 200, 200)
 
@@ -68,7 +69,32 @@ def on_update_interval():
     bogey.y = randint(0,scene.screen_height())
     bogey.set_flag(SpriteFlag.AUTO_DESTROY, True)
 
+def bomb_update_interval():
+    weaponup = sprites.create(img("""
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . 7 7 7 . . . . . . . .
+        . . . . 7 . . . 7 . . . . . . .
+        . . . 7 . 5 1 5 . 7 . . . . . .
+        . . . . 5 1 5 1 5 . . . . . . .
+        . . . 7 . 5 1 5 . 7 . . . . . .
+        . . . . 7 . . . 7 . . . . . . .
+        . . . . . 7 7 7 . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+    """),SpriteKind.enemy)
+    weaponup.set_velocity(-25,0)
+    weaponup.left = scene.screen_width()
+    weaponup.y = randint(0,scene.screen_height())
+    weaponup.set_flag(SpriteFlag.AUTO_DESTROY, True)
+
 game.on_update_interval(500,on_update_interval)
+game.on_update_interval(1000,bomb_update_interval)
 
 def on_on_overlap(sprite, otherSprite):
     otherSprite.destroy()
